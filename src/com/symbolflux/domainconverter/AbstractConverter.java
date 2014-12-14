@@ -141,7 +141,7 @@ public abstract class AbstractConverter<I extends Convertible, F extends Convert
         if (!this.convertedObjectBuffer.isEmpty()) //if the source domain already has a result buffered, grab it
             return this.convertedObjectBuffer.remove();
 
-        I pulledObject = source.pullOccurred(this);
+        I pulledObject = (I)source.pullOccurred(this);
         return this.getFinalFromInitial(pulledObject);
     }
 
@@ -149,7 +149,7 @@ public abstract class AbstractConverter<I extends Convertible, F extends Convert
         if (!this.convertedObjectSetBuffer.isEmpty()) //if the source domain already has a result buffered, grab it
             return this.convertedObjectSetBuffer.remove();
 
-        ArrayList<I> pulledObjects = source.pullSetOccurred(this);
+        ArrayList<I> pulledObjects = (ArrayList<I>)source.pullSetOccurred(this);
         ArrayList<F> finalObjects = new ArrayList<F>();
 
         //potentially a way of doing it with Streams...

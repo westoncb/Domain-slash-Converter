@@ -4,9 +4,9 @@ package com.symbolflux.domainconverter;
 import java.util.ArrayList;
 
 public interface Domain {
-    public <I extends Convertible, F extends Convertible> void pushOccurred(AbstractConverter<I, F> converter, F finalObject);
-    public <I extends Convertible, F extends Convertible> void pushSetOccurred(AbstractConverter<I, F> converter, ArrayList<F> finalObjects);
+    public void pushOccurred(AbstractConverter<? extends Convertible, ? extends Convertible> converter, Convertible finalObject);
+    public void pushSetOccurred(AbstractConverter<? extends Convertible, ? extends Convertible> converter, ArrayList<? extends Convertible> finalObjects);
 
-    public <I extends Convertible, F extends Convertible> I pullOccurred(AbstractConverter<I, F> converter);
-    public <I extends Convertible, F extends Convertible> ArrayList<I> pullSetOccurred(AbstractConverter<I, F> converter);
+    public Convertible pullOccurred(AbstractConverter<? extends Convertible, ? extends Convertible> converter);
+    public ArrayList<? extends Convertible> pullSetOccurred(AbstractConverter<? extends Convertible, ? extends Convertible> converter);
 }
