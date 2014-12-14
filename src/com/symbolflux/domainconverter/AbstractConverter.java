@@ -10,7 +10,7 @@ import java.util.Queue;
 /**
  * Created by weston on 12/12/14.
  */
-public abstract class AbstractConverter<I, F> {
+public abstract class AbstractConverter<I extends Convertible, F extends Convertible> {
     //The linked Domains
     private Domain source;
     private Domain dest;
@@ -66,11 +66,10 @@ public abstract class AbstractConverter<I, F> {
             optFinalObject = Optional.ofNullable(this.getMappedObject(initialObject));
 
         if (optFinalObject.isPresent()) { //We found a corresponding final object in the map
-            if (initialObject instanceof Modifiable) {
-                Modifiable maybeModifiedInitialObject = (Modifiable)initialObject;
-                if (maybeModifiedInitialObject.modified()) { //The initial object was modified
+            if (initialObject.modifiable()) {
+                if (initialObject.modified()) { //The initial object was modified
                     F updatedFinalObject = this.update(initialObject, optFinalObject.get());
-                    maybeModifiedInitialObject.setUnmodified();
+                    initialObject.setUnmodified();
 
                     finalObject =  updatedFinalObject;
                 } else { //It wasn't modified, so just return the mapped object
