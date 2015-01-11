@@ -10,9 +10,10 @@ import java.util.Queue;
 /**
  * Created by weston on 12/12/14.
  */
-public abstract class AbstractConverter<I extends Convertible, F extends Convertible> {
+public abstract class AbstractConverter<I extends Convertible, F> {
     //The linked Domains
     private Domain source;
+
     private Domain dest;
 
     //Queues of work completed by the source domain before requested by the destination domain.
@@ -28,8 +29,17 @@ public abstract class AbstractConverter<I extends Convertible, F extends Convert
     //each time, 'usePersistentMap' should be false, and neither map nor inverseMap will be used.
     private boolean usePersistentMap;
     private boolean useInverseMap;
+    private boolean useOneToMany;
     private HashBiMap<I, F> map;
     private HashBiMap<F, I> inverseMap;
+
+    public AbstractConverter(Domain source, Domain dest, boolean usePersistentMap) {
+        this.attachDomains(source, dest, usePersistentMap);
+    }
+
+    public AbstractConverter(Domain source, Domain dest) {
+        this(source, dest, false);
+    }
 
     public AbstractConverter attachDomains(Domain source, Domain dest, boolean usePersistentMap) {
         this.source = source;
@@ -42,20 +52,23 @@ public abstract class AbstractConverter<I extends Convertible, F extends Convert
         if (this.usePersistentMap)
             map = HashBiMap.create();
 
-        return this;
-    }
-
-    public AbstractConverter attachDomains(Domain source, Domain dest, AbstractConverter<F, I> inverse) {
-        this.attachDomains(source, dest, true);
-
-        assert inverse.usePersistentMap : "Doesn't make sense to be the inverse of a converter not using a persistent map";
-
-        this.map = null;
-        this.inverseMap = inverse.map;
-        this.useInverseMap = true;
+        Domains.add(source);
+        Domains.add(dest);
 
         return this;
     }
+
+//    public AbstractConverter attachDomains(Domain source, Domain dest, AbstractConverter<F, I> inverse) {
+//        this.attachDomains(source, dest, true);
+//
+//        assert inverse.usePersistentMap : "Doesn't make sense to be the inverse of a converter not using a persistent map";
+//
+//        this.map = null;
+//        this.inverseMap = inverse.map;
+//        this.useInverseMap = true;
+//
+//        return this;
+//    }
 
     private F getFinalFromInitial(I initialObject) {
         F finalObject;
@@ -183,5 +196,13 @@ public abstract class AbstractConverter<I extends Convertible, F extends Convert
         }
 
         this.convertedObjectSetBuffer.add(finalObjects);
+    }
+
+    public Domain getDest() {
+        return dest;
+    }
+
+    public Domain getSource() {
+        return source;
     }
 }
