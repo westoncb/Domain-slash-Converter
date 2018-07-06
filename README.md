@@ -5,6 +5,8 @@ Domain-slash-Converter
 A general argument for this scheme as it relates to known values in software engeineering runs as follows: 
 If you have a program made up of regions, eaching having their own ‘concerns’—which I would characterize by their having a specialized vocabulary of functions, classes, variables—and these distinct regions need to communicate, the terms of one region must be translated into the terms of the other before such a communication can happen. This conversion/translation process requires the vocabulary of both areas, so it will be a region with (relatively) high coupling. This Domain/Converter framework is a way of being explicit about where the boundaries in your code are for a section using one ‘vocabulary,’ as well as a way of sequestering the translation activities that sit at the interface of two such demarcated regions.
 
+So far 'Lucidity' is the only application being built on this Domain/Converter framework: http://symbolflux.com/projects/avd
+
 
 ## More Detailed Overview
 This is a simple framework that introduces two high level constructs to help organize programs into regions with distinct 'vocabularies.' The idea is to make regions of code having shared 'concerns' explicit (as in 'seperation of concerns'—and on a level higher than Java classes); this is done by partitioning a program into a number of different 'Domains,' each of which has a specialized *vocabularies* for talking about whatever it is that it does. The idea is to emphasise *language specialization* for specific tasks, while adding as little burden as possible in doing so—the same idea as a domain specific language, without changing the grammar, which is domain agnostic in most cases.
