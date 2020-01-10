@@ -9,6 +9,11 @@ Another way of describing it: it's an application framework where at the highest
 
 So far 'Lucidity' is the only application being built on this Domain/Converter framework: http://symbolflux.com/projects/avd
 
+Diagram of 'domains' and 'converters' for Lucidity's early architecture:<br>
+<img src="https://symbolflux.s3.amazonaws.com/lucidity-diagram-screen.jpg" alt="alt text" width="350">
+
+Initializing domains and converters in Lucidity:<br>
+<img src="https://symbolflux.s3.amazonaws.com/lucidity-init-screen.png" alt="alt text">
 
 ## More Detailed Overview
 This is a simple framework that introduces two high level constructs to help organize programs into regions with distinct 'vocabularies.' The idea is to make regions of code having shared 'concerns' explicit (as in 'seperation of concerns'—and on a level higher than Java classes); this is done by partitioning a program into a number of different 'Domains,' each of which has a specialized *vocabularies* for talking about whatever it is that it does. The idea is to emphasise *language specialization* for specific tasks, while adding as little burden as possible in doing so—the same idea as a domain specific language, without changing the grammar, which is domain agnostic in most cases.
